@@ -1,23 +1,37 @@
 # 5×5 Image Anomaly Detection
 
-## Project Overview
+## Abstract
 
-This project detects anomalies in a **5×5 grayscale image** using image processing, convolution, ReLU activation, feature extraction, and machine learning.
+This project presents an image anomaly detection approach using a 5×5 grayscale image, convolution-based feature extraction, ReLU activation, and the Isolation Forest machine learning algorithm.
 
-The main objective is to identify whether an input image or extracted feature pattern is **Normal** or **Anomalous**.
+The objective is to demonstrate how low-level image processing techniques can be combined with an unsupervised machine learning algorithm to identify abnormal patterns in image data.
 
 ---
 
-## Project Method
+## Objectives
 
-The overall processing pipeline is:
+The primary objectives of this project are:
+
+- To represent a grayscale image as a numerical matrix.
+- To perform convolution using a 3×3 filter.
+- To extract meaningful features from the input image.
+- To apply the ReLU activation function.
+- To analyze the extracted features using Isolation Forest.
+- To classify the input pattern as normal or anomalous.
+- To demonstrate the mathematical operations involved in image-based anomaly detection.
+
+---
+
+## Methodology
+
+The proposed methodology consists of the following stages:
 
 ```text
 5×5 Grayscale Image
         ↓
-3×3 Filter
+3×3 Convolution Filter
         ↓
-Convolution
+Convolution Operation
         ↓
 ReLU Activation
         ↓
@@ -26,90 +40,65 @@ Feature Extraction
 Isolation Forest
         ↓
 Normal / Anomaly
-Input Image
+Input Data
 
-The input is a 5×5 grayscale image represented as a matrix of pixel values.
+The input is represented as a 5×5 grayscale image matrix. Each element of the matrix represents the intensity value of a pixel.
 
-Example:
+A grayscale image contains a single channel, where the pixel intensity represents the brightness of the corresponding pixel.
 
-[ 10  12  11  10  13 ]
-[ 11  10  12  11  10 ]
-[ 12  11  10  12  11 ]
-[ 10  13  12  11  10 ]
-[ 11  10  11  12  13 ]
+Convolution Operation
 
-Each value represents the intensity of a pixel.
+A 3×3 convolution filter is applied to the 5×5 input image.
 
-Convolution
+For each position of the filter, element-wise multiplication is performed between the filter and the corresponding image region, followed by summation.
 
-A 3×3 filter is applied to the 5×5 input image.
+The convolution operation can be represented as:
 
-The filter moves across the image and performs element-wise multiplication followed by summation.
+Convolution Output = Σ(Input Region × Filter)
 
-The convolution operation extracts important local features from the image.
+For a 5×5 input, a 3×3 filter, stride = 1, and no padding, the output feature map size is:
 
-The output size depends on the input size, filter size, padding, and stride.
+Output Size = (Input Size - Filter Size) / Stride + 1
 
-For a 5×5 input with a 3×3 filter, stride = 1, and no padding, the output feature map is:
+Output Size = (5 - 3) / 1 + 1
 
-(5 - 3) / 1 + 1 = 3
+Output Size = 3
 
-Therefore, the convolution produces a:
+Therefore, the resulting feature map has dimensions:
 
-3×3 feature map
+3 × 3
 ReLU Activation
 
-After convolution, the ReLU activation function is applied.
+The Rectified Linear Unit (ReLU) activation function is applied to the convolution output.
 
-The ReLU function is:
+The mathematical representation of ReLU is:
 
 ReLU(x) = max(0, x)
 
-This means:
+The function converts negative values to zero while retaining positive values.
 
-Negative values become 0.
-Positive values remain unchanged.
-
-Example:
-
-Before ReLU:
-
-[-2   4  -1]
-[ 3  -5   6]
-[-1   2   0]
-
-After ReLU:
-
-[0   4   0]
-[3   0   6]
-[0   2   0]
-
-ReLU introduces non-linearity and helps the model learn useful patterns.
+ReLU introduces non-linearity into the feature representation and enables the model to learn more complex patterns.
 
 Feature Extraction
 
-The ReLU output is treated as the extracted feature representation.
+The output obtained after applying ReLU represents the extracted feature map.
 
-These features contain information about the patterns present in the image.
+These features provide information about local patterns and structures present in the input image.
 
-The extracted features are then provided to the anomaly detection model.
+The extracted feature values are subsequently converted into a suitable representation for anomaly detection.
 
-Anomaly Detection
+Anomaly Detection Using Isolation Forest
 
-The project uses the Isolation Forest algorithm for anomaly detection.
+The extracted features are analyzed using the Isolation Forest algorithm.
 
-Isolation Forest is an unsupervised machine learning algorithm that identifies unusual observations by isolating them from normal observations.
+Isolation Forest is an unsupervised machine learning algorithm designed to identify anomalous observations.
 
-The output is classified into:
+The algorithm works by isolating observations through recursive partitioning. Anomalous observations generally require fewer partitions to become isolated because they differ significantly from the majority of the data.
+
+The final prediction categorizes the input as:
 
 Normal
-
-or
-
 Anomaly
-
-An image or feature vector that differs significantly from the learned normal patterns can be identified as an anomaly.
-
 Technologies Used
 Python
 NumPy
@@ -121,88 +110,64 @@ GitHub
 Libraries Used
 NumPy
 
-Used for:
+NumPy is used for numerical computations, matrix representation, and convolution-related operations.
 
-Matrix operations
-Image representation
-Numerical calculations
-Convolution calculations
 Matplotlib
 
-Used for:
+Matplotlib is used for image visualization and graphical representation of results.
 
-Displaying images
-Plotting matrices
-Visualizing results
 Scikit-learn
 
-Used for:
+Scikit-learn is used to implement the Isolation Forest anomaly detection algorithm.
 
-Isolation Forest
-Machine learning-based anomaly detection
-Model evaluation
-Mathematical Process
+Mathematical Workflow
 
-The project follows these main mathematical steps:
+The mathematical processing can be summarized as follows:
 
-1. Convolution
+Step 1: Input Representation
 
-A 3×3 filter is applied to the 5×5 input image.
+The 5×5 grayscale image is represented as a matrix:
 
-For each position:
+I ∈ R⁵ˣ⁵
+Step 2: Convolution
 
-Convolution Output =
-Sum(Input Region × Filter)
-2. ReLU
+A 3×3 filter is applied to the image:
 
-The convolution output is passed through:
+F ∈ R³ˣ³
 
-ReLU(x) = max(0, x)
-3. Feature Extraction
+The convolution produces a 3×3 feature map.
 
-The resulting feature values are used as the feature representation of the image.
+Step 3: ReLU
 
-4. Isolation Forest
+The convolution output is transformed using:
 
-The extracted features are analyzed to determine whether the sample follows the normal pattern or is significantly different.
+R(x) = max(0, x)
+Step 4: Feature Representation
 
-Example Processing
-Input:
+The resulting feature map is converted into a feature vector for anomaly detection.
 
-5×5 Image
-    ↓
-3×3 Filter
-    ↓
-Convolution
-    ↓
-3×3 Feature Map
-    ↓
-ReLU
-    ↓
-Non-negative Features
-    ↓
-Feature Vector
-    ↓
-Isolation Forest
-    ↓
-Normal / Anomaly
-Objective
+Step 5: Anomaly Detection
 
-The main objectives of this project are:
+The feature vector is provided to the Isolation Forest model to determine whether the sample represents a normal or anomalous pattern.
 
-Represent a grayscale image as a matrix.
-Apply a 3×3 convolution filter.
-Understand feature extraction using convolution.
-Apply ReLU activation.
-Extract useful features.
-Apply Isolation Forest for anomaly detection.
-Classify the input as Normal or Anomaly.
-Understand the mathematical operations involved in CNN-based image processing.
+Experimental Workflow
+
+The complete implementation follows these steps:
+
+Define the 5×5 grayscale input image.
+Define a 3×3 convolution filter.
+Perform the convolution operation.
+Generate the feature map.
+Apply the ReLU activation function.
+Extract the resulting features.
+Train or apply the Isolation Forest model.
+Generate the anomaly prediction.
+Visualize the intermediate and final results.
 Results
 
-The model produces an anomaly detection result for the input feature pattern.
+The system generates an anomaly classification based on the extracted image features.
 
-The final output is:
+The final classification is represented as:
 
 Normal
 
@@ -210,7 +175,7 @@ or
 
 Anomaly
 
-The exact result depends on the input image, filter values, extracted features, and Isolation Forest model.
+The result depends on the input image, convolution filter, extracted feature representation, and Isolation Forest configuration used in the experiment.
 
 Project Structure
 5x5-image-anomaly-detection/
@@ -218,24 +183,29 @@ Project Structure
 ├── 5x5_Image_Anomaly_Detection.ipynb
 ├── README.md
 └── .gitignore
-How to Run
+How to Run the Project
 Open the Jupyter Notebook in Google Colab.
 Run the cells sequentially.
-Enter or generate the 5×5 grayscale image.
-Apply the 3×3 convolution filter.
-Calculate the feature map.
+Provide or generate the 5×5 grayscale input image.
+Perform the convolution operation using the 3×3 filter.
 Apply ReLU activation.
-Extract the features.
-Apply Isolation Forest.
-Observe the final Normal/Anomaly prediction.
+Extract the resulting features.
+Apply the Isolation Forest algorithm.
+Observe the final anomaly classification.
+Applications
+
+The concepts demonstrated in this project can be extended to applications such as:
+
+Image quality inspection
+Defect detection
+Pattern analysis
+Industrial anomaly detection
+Computer vision preprocessing
+Automated visual inspection
 Conclusion
 
-This project demonstrates how basic image processing and machine learning techniques can be combined for anomaly detection.
+This project demonstrates a basic image anomaly detection pipeline combining convolution-based feature extraction with unsupervised machine learning.
 
-A 5×5 grayscale image is processed using a 3×3 convolution filter to extract local features. The ReLU activation function removes negative feature values and introduces non-linearity.
+The 5×5 grayscale image is processed using a 3×3 convolution filter to obtain a feature map. The ReLU activation function is then applied to introduce non-linearity and obtain meaningful non-negative features. These features are subsequently analyzed using the Isolation Forest algorithm to identify anomalous patterns.
 
-The extracted features are then analyzed using Isolation Forest to determine whether the input pattern is normal or anomalous.
-
-The project provides a simple demonstration of the relationship between:
-
-Image → Convolution → ReLU → Feature Extraction → Anomaly Detection
+The project provides a fundamental understanding of how image processing, feature extraction, and machine learning can be integrated to perform anomaly detection.
